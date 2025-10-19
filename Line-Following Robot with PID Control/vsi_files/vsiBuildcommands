@@ -1,0 +1,66 @@
+# VSI Buildcommands for Line-Following Robot Project
+# Copyright Siemens 2022
+# Innexis VSI Digital Twin Builder
+# Release v2025.2, build 04Jun2025
+
+add component -type Python -name simulator
+add port -componentName simulator -name simulator -gateway python2DtCan
+
+add component -type Python -name controller
+add port -componentName controller -name controller -gateway python2DtCan
+
+add component -type Python -name visualizer
+add port -componentName visualizer -name visualizer -gateway python2DtCan
+
+ 
+define componentSignals -componentName simulator -signals "[points_x:double:output,points_y:double:output,x:double:output,y:double:output,theta:double:output,t:double:output,v:double:input,omega:double:input,t_cmd:double:input]"
+define componentSignals -componentName controller -signals "[x:double:input,y:double:input,theta:double:input,t:double:input,v:double:output,omega:double:output,t_cmd:double:output,points_x:double:input,points_y:double:input,e_lat:double:output,e_theta:double:output,dist_to_path:double:output,u_raw:double:output,deriv_sm:double:output]"
+define componentSignals -componentName visualizer -signals "[x:double:input,y:double:input,theta:double:input,t:double:input,points_x:double:input,points_y:double:input,e_lat:double:input,e_theta:double:input,dist_to_path:double:input,u_raw:double:input,deriv_sm:double:input]"
+
+# Define frames (IDs must be unique per signal)
+
+# Each signal appears in only one frame per port (no overlaps)
+define frame -componentName simulator -portName simulator -id 10 -signals [points_x:0:64]
+define frame -componentName simulator -portName simulator -id 11 -signals [points_y:0:64]
+define frame -componentName simulator -portName simulator -id 12 -signals [x:0:64]
+define frame -componentName simulator -portName simulator -id 13 -signals [y:0:64]
+define frame -componentName simulator -portName simulator -id 14 -signals [theta:0:64]
+define frame -componentName simulator -portName simulator -id 15 -signals [t:0:64]
+define frame -componentName simulator -portName simulator -id 16 -signals [v:0:64]
+define frame -componentName simulator -portName simulator -id 17 -signals [omega:0:64]
+define frame -componentName simulator -portName simulator -id 18 -signals [t_cmd:0:64]
+
+define frame -componentName controller -portName controller -id 10 -signals [x:0:64]
+define frame -componentName controller -portName controller -id 11 -signals [y:0:64]
+define frame -componentName controller -portName controller -id 12 -signals [theta:0:64]
+define frame -componentName controller -portName controller -id 13 -signals [t:0:64]
+define frame -componentName controller -portName controller -id 14 -signals [v:0:64]
+define frame -componentName controller -portName controller -id 15 -signals [omega:0:64]
+define frame -componentName controller -portName controller -id 16 -signals [t_cmd:0:64]
+define frame -componentName controller -portName controller -id 17 -signals [points_x:0:64]
+define frame -componentName controller -portName controller -id 18 -signals [points_y:0:64]
+define frame -componentName controller -portName controller -id 19 -signals [e_lat:0:64]
+define frame -componentName controller -portName controller -id 20 -signals [e_theta:0:64]
+define frame -componentName controller -portName controller -id 21 -signals [dist_to_path:0:64]
+define frame -componentName controller -portName controller -id 22 -signals [u_raw:0:64]
+define frame -componentName controller -portName controller -id 23 -signals [deriv_sm:0:64]
+
+define frame -componentName visualizer -portName visualizer -id 10 -signals [x:0:64]
+define frame -componentName visualizer -portName visualizer -id 11 -signals [y:0:64]
+define frame -componentName visualizer -portName visualizer -id 12 -signals [theta:0:64]
+define frame -componentName visualizer -portName visualizer -id 13 -signals [t:0:64]
+define frame -componentName visualizer -portName visualizer -id 14 -signals [points_x:0:64]
+define frame -componentName visualizer -portName visualizer -id 15 -signals [points_y:0:64]
+define frame -componentName visualizer -portName visualizer -id 16 -signals [e_lat:0:64]
+define frame -componentName visualizer -portName visualizer -id 17 -signals [e_theta:0:64]
+define frame -componentName visualizer -portName visualizer -id 18 -signals [dist_to_path:0:64]
+define frame -componentName visualizer -portName visualizer -id 19 -signals [u_raw:0:64]
+define frame -componentName visualizer -portName visualizer -id 20 -signals [deriv_sm:0:64]
+
+set totalSimTime 70 s
+set simulationStep 0.02 s
+
+set workspaceDir .
+set digitalTwinName lineFollowingDemo
+
+generate
